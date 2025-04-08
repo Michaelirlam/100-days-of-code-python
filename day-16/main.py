@@ -20,10 +20,7 @@ while machine_on:
         if drink is None:
             print("Sorry, that drink is not available.")
         else: 
-            if coffee_maker.is_resource_sufficient(drink):
-                if money_machine.make_payment(drink.cost):
-                    coffee_maker.make_coffee(drink)
-                    coffee_maker.report()
-                    money_machine.report()
-                else:
-                    print("insufficient funds")
+            if coffee_maker.is_resource_sufficient(drink) and money_machine.make_payment(drink.cost):
+                coffee_maker.make_coffee(drink)
+                coffee_maker.report()
+                money_machine.report()
