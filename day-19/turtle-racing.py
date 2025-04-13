@@ -81,6 +81,6 @@ while is_race_on:
             if user_bet == turtle_colour[turtles.index(t)]:
                 print("You Won")
             else:
-                print(f"you Lost, the winner was {turtle_colour[turtles.index(t)]}")
+                print(f"you Lost, the winner is {turtle_colour[turtles.index(t)]}")
 
 screen.exitonclick()
