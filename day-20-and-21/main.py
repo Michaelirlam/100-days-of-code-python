@@ -2,10 +2,12 @@ from turtle import Turtle, Screen
 import time
 from snake import Snake
 from food import Food
+from scoreboard import Scoreboard
 
 # Creates the initial snake using the Snake class and food using the Food classq
 snake = Snake()
 food = Food()
+scoreboard = Scoreboard()
 
 def close_game():
     """function for closing the game, should be used with an onkey event"""
@@ -36,9 +38,11 @@ while not game_over:
     snake.move()
 
     # checks to see if snake made contact with the food and refreshes food position and grows snake
+    # score now increases when snake eats the food
     if snake.snake_body[0].distance(food) < 15:
         food.refresh(snake_positions=snake.snake_body)
         snake.grow()
+        scoreboard.increase_score()
     
 
 
