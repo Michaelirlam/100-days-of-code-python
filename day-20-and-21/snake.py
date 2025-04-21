@@ -56,5 +56,16 @@ class Snake():
         head = self.snake_body[0]
         return head.xcor() > boundary or head.xcor() < -boundary or head.ycor() > boundary or head.ycor() < -boundary
     
+    def detect_tail_collision(self):
+        """Checks if the snake has hit its own tail"""
+        # Check if the head is too close to any of the body segments
+        head = self.snake_body[0]
+        body = self.snake_body[1:]
+        for segment in body:
+            if head.distance(segment) < 10:
+                return True
+        return False
+
+    
 
     
