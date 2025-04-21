@@ -1,9 +1,9 @@
 from turtle import Turtle
 
-MOVE_DISTANCE = 20
+MOVE_DISTANCE = 20 # The distance the snake moves each time
 
+# This class is responsible for creating the snake
 class Snake():
-
     def __init__(self):
         self.snake_body = []
         for num in range(3):
@@ -46,5 +46,15 @@ class Snake():
         new_segment.penup()
         new_segment.setpos((self.snake_body[-1].xcor(), self.snake_body[-1].ycor()))
         self.snake_body.append(new_segment)
+
+    def detect_wall_collision(self, boundary=290):
+        """
+        Checks if the snake has hit the wall
+        :param boundary: The distance from the center of the screen to the wall
+        :return: True if the snake has hit the wall, False otherwise
+        """
+        head = self.snake_body[0]
+        return head.xcor() > boundary or head.xcor() < -boundary or head.ycor() > boundary or head.ycor() < -boundary
+    
 
     

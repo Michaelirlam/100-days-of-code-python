@@ -4,10 +4,10 @@ from snake import Snake
 from food import Food
 from scoreboard import Scoreboard
 
-# Creates the initial snake using the Snake class and food using the Food classq
-snake = Snake()
-food = Food()
-scoreboard = Scoreboard()
+# This is a simple snake game using the turtle module in Python.
+snake = Snake() # Snake class to create the snake
+food = Food() # Food class to generate food at random locations
+scoreboard = Scoreboard() # Scoreboard class to keep track of the score
 
 def close_game():
     """function for closing the game, should be used with an onkey event"""
@@ -30,12 +30,13 @@ screen.onkey(snake.up, "Up")
 screen.onkey(snake.down, "Down")
 
 # Game logic
-game_over = False
+game_over = False # Variable to track if the game is over
+speed = 0.2 # Initial speed
 
 while not game_over:
     screen.update()
-    time.sleep(0.2)
-    snake.move()
+    time.sleep(speed) # Controls the speed of the game
+    snake.move() # moves the snake forward
 
     # checks to see if snake made contact with the food and refreshes food position and grows snake
     # score now increases when snake eats the food
@@ -43,7 +44,14 @@ while not game_over:
         food.refresh(snake_positions=snake.snake_body)
         snake.grow()
         scoreboard.increase_score()
+
+        # Increase speed every 5 points and sets a minimum speed to avoid the game being too fast
+        if scoreboard.score % 5 == 0:
+            speed = max(0.05, speed - 0.02)
+    
+    if snake.detect_wall_collision():
+        game_over = True
     
 
 
-screen.bye()
+screen.bye() # Closes the game when the user presses "q"
