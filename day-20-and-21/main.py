@@ -51,12 +51,18 @@ while not game_over:
     
     # checks to see if snake has hit the wall and if it has, the game is over
     if snake.detect_wall_collision():
+        scoreboard.game_over()
+        screen.update()
         game_over = True
-    
+        
+
     # checks to see if snake has hit its own tail and if it has, the game is over
     if snake.detect_tail_collision():
+        scoreboard.game_over()
+        screen.update()
         game_over = True
     
 
-
-screen.bye() # Closes the game when the user presses "q"
+if game_over:
+    time.sleep(2) # Waits for 2 seconds before closing the game
+    screen.bye() # Closes the game when the user presses "q"
