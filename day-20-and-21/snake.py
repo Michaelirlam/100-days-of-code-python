@@ -60,8 +60,7 @@ class Snake():
         """Checks if the snake has hit its own tail"""
         # Check if the head is too close to any of the body segments
         head = self.snake_body[0]
-        body = self.snake_body[1:]
-        for segment in body:
+        for segment in self.snake_body[1:]:
             if head.distance(segment) < 10:
                 return True
         return False
