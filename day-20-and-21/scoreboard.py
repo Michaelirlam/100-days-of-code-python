@@ -25,7 +25,7 @@ class Scoreboard(Turtle):
         """Displays game over message"""
         self.goto(0, 0)
         self.color("red")
-        self.write("Game Over", move=False, align="center", font=("Arial", 24, "bold"))
+        self.write("GAME OVER!", move=False, align="center", font=("Arial", 24, "bold"))
 
         
         
