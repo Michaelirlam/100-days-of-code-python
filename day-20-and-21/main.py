@@ -5,6 +5,12 @@ from food import Food
 from scoreboard import Scoreboard
 
 # This is a simple snake game using the turtle module in Python.
+# The game is played using the arrow keys to control the snake's movement.
+# The objective of the game is to eat the food that appears on the screen,
+# which causes the snake to grow longer. The game ends if the snake collides
+# with the wall or itself.
+# This file is the main file that runs the game and has the game logic.
+
 snake = Snake() # Snake class to create the snake
 food = Food() # Food class to generate food at random locations
 scoreboard = Scoreboard() # Scoreboard class to keep track of the score
