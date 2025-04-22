@@ -64,6 +64,18 @@ class Snake():
             if head.distance(segment) < 10:
                 return True
         return False
+    
+    def wall_teleport(self, boundary=300):
+        head = self.snake_body[0]
+        if head.xcor() > boundary:
+            head.goto(x=-boundary, y=head.ycor())
+        elif head.xcor() < -boundary:
+            head.goto(x=boundary, y=head.ycor())
+        elif head.ycor() > boundary: 
+            head.goto(x=head.xcor(), y=-boundary)
+        elif head.ycor() < -boundary:
+            head.goto(x=head.xcor(), y=boundary)
+            
 
     
 

@@ -56,11 +56,13 @@ while not game_over:
             speed = max(0.05, speed - 0.02)
     
     # checks to see if snake has hit the wall and if it has, the game is over
+    """
     if snake.detect_wall_collision():
         scoreboard.game_over()
         screen.update()
         game_over = True
-        
+    """
+    snake.wall_teleport()    
 
     # checks to see if snake has hit its own tail and if it has, the game is over
     if snake.detect_tail_collision():
