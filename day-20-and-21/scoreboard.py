@@ -26,7 +26,5 @@ class Scoreboard(Turtle):
         self.goto(0, 0)
         self.color("red")
         self.write("GAME OVER!", move=False, align="center", font=("Arial", 24, "bold"))
-
-        
         
         

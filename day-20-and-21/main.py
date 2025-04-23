@@ -3,6 +3,7 @@ import time
 from snake import Snake
 from food import Food
 from scoreboard import Scoreboard
+import pygame
 
 # This is a simple snake game using the turtle module in Python.
 # The game is played using the arrow keys to control the snake's movement.
@@ -11,6 +12,13 @@ from scoreboard import Scoreboard
 # with the wall or itself.
 # This file is the main file that runs the game and has the game logic.
 
+# Initialise pygame mixer
+pygame.mixer.init()
+pygame.mixer.music.load("./sound-fx/level-ix-211054.mp3") # Load the background music
+food_sound = pygame.mixer.Sound("./sound-fx/arcade-fx-288597.mp3") # Load sound effect
+pygame.mixer.music.play(-1) # Play the background music in a loop
+
+# Creating the game objects
 snake = Snake() # Snake class to create the snake
 food = Food() # Food class to generate food at random locations
 scoreboard = Scoreboard() # Scoreboard class to keep track of the score
@@ -34,7 +42,7 @@ speed = 0.2 # Initial speed
 # Prompt the user to select a game mode
 game_mode = screen.textinput(
     title="Snake Game", 
-    prompt="Select difficult: Type 'easy' for no walls or 'normal' for walls. If you would like to view the scoreboard type 'scoreboard'"
+    prompt="Select difficult: Type 'easy' for no walls or 'normal' for walls."
 )
 
 # Checks for valid user input
@@ -60,9 +68,10 @@ while not game_over:
     # checks to see if snake made contact with the food and refreshes food position and grows snake
     # score now increases when snake eats the food
     if snake.snake_body[0].distance(food) < 15:
-        food.refresh(snake_positions=snake.snake_body)
-        snake.grow()
-        scoreboard.increase_score()
+        food_sound.play() # Play sound effect when snake eats food
+        food.refresh(snake_positions=snake.snake_body) # Refreshes food position
+        snake.grow() # Grows the snake
+        scoreboard.increase_score() # Increases the score by 1
 
         # Increase speed every 5 points and sets a minimum speed to avoid the game being too fast
         if scoreboard.score % 5 == 0:
