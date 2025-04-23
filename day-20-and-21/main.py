@@ -27,17 +27,30 @@ screen.bgcolor("black")
 screen.title("My Snake Game")
 screen.tracer(0)
 
-# Movement settings
-screen.listen()
-screen.onkey(close_game, "q")
-screen.onkey(snake.left, "Left")
-screen.onkey(snake.right, "Right")
-screen.onkey(snake.up, "Up")
-screen.onkey(snake.down, "Down")
-
 # Game logic
 game_over = False # Variable to track if the game is over
 speed = 0.2 # Initial speed
+
+# Prompt the user to select a game mode
+game_mode = screen.textinput(
+    title="Snake Game", 
+    prompt="Select difficult: Type 'easy' for no walls or 'normal' for walls. If you would like to view the scoreboard type 'scoreboard'"
+)
+
+# Checks for valid user input
+if game_mode is None or game_mode.lower() not in ["easy", "normal", "scoreboard"]:
+    print("Invalid input. Please restart the game and enter 'easy' or 'normal'.")
+    screen.bye() # Closes the game if the input is invalid
+else:
+    game_mode = game_mode.lower()
+
+# Movement settings
+screen.listen()
+screen.onkey(close_game, "q") # Closes the game when the user presses "q"
+screen.onkey(snake.left, "Left") # Moves the snake left when the user presses "Left"
+screen.onkey(snake.right, "Right") # Moves the snake right when the user presses "Right"
+screen.onkey(snake.up, "Up") # Moves the snake up when the user presses "Up"
+screen.onkey(snake.down, "Down") # Moves the snake down when the user presses "Down"
 
 while not game_over:
     screen.update()
@@ -56,13 +69,14 @@ while not game_over:
             speed = max(0.05, speed - 0.02)
     
     # checks to see if snake has hit the wall and if it has, the game is over
-    """
-    if snake.detect_wall_collision():
-        scoreboard.game_over()
-        screen.update()
-        game_over = True
-    """
-    snake.wall_teleport()    
+    if game_mode == "easy":
+        snake.wall_teleport()
+    elif game_mode == "normal":
+        if snake.detect_wall_collision():
+            scoreboard.game_over()
+            screen.update()
+            game_over = True
+       
 
     # checks to see if snake has hit its own tail and if it has, the game is over
     if snake.detect_tail_collision():
