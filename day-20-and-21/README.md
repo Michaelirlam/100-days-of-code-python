@@ -6,8 +6,8 @@ Day 20 and 21 projects were part 1 and part 2 of building a classic snake game u
 
 I have built the snake game with 2 modes:
 
-  easy: No walls, snake moves to the opposite side of the screen when passing through a wall
-  normal: Walls, game is over if the snake hits a wall
+easy: No walls, snake moves to the opposite side of the screen when passing through a wall
+normal: Walls, game is over if the snake hits a wall
 
 The speed of the snake increases for every 5 points the player scores (every 5 food the player's snake eats)
 and will continue to grow in size on eating food indefinitely until the game is over (snake hits is own tail
