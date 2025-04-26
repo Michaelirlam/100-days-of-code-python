@@ -28,4 +28,12 @@ class Ball(Turtle):
         self.teleport(0, 0) # Reset position to center, used over goto to avoid flickering
         self.bounce_x()  # Reverse direction to give the other player a chance
 
+    def increase_speed(self):
+        """Increase the speed of the ball."""
+        self.x_move *= 1.1
+        self.y_move *= 1.1
     
+    def base_speed(self):
+        """Resets ball speed to base"""
+        self.x_move = 10
+        self.y_move = 5

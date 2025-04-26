@@ -41,10 +41,12 @@ def game_loop():
     # Ball-paddle collision
     if paddle_two.detect_collision(ball):
         ball.bounce_x()
-        ball.setx(ball.xcor() - 10)  # Move ball slightly away from paddle to prevent sticking
+        ball.setx(ball.xcor() - 10) # Move ball slightly away from paddle to prevent sticking
+        ball.increase_speed()
     if paddle_one.detect_collision(ball):
         ball.bounce_x()
         ball.setx(ball.xcor() + 10) 
+        ball.increase_speed()
 
     # Check for out of bounds and increase score
     if ball.xcor() > 600:
@@ -52,11 +54,13 @@ def game_loop():
         scoreboard.increase_player_score()
         time.sleep(1) # Delay to allow player time after scoring
         ball.reset_position() # reset ball position and reverse direction
+        ball.base_speed()
     elif ball.xcor() < -600:
         # Computer scores
         scoreboard.increase_computer_score()
         time.sleep(1)
         ball.reset_position()
+        ball.base_speed()
 
     # Check for game over condition
     if scoreboard.player_score == 10:
