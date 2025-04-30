@@ -77,6 +77,8 @@ class Snake():
             head.goto(x=head.xcor(), y=boundary)
             
 
-    
+    def reset(self):
+        self.snake_body.clear()
+        self.__init__()
 
     

@@ -84,14 +84,16 @@ while not game_over:
         if snake.detect_wall_collision():
             scoreboard.game_over()
             screen.update()
-            game_over = True
+            scoreboard.reset()
+            snake.reset()
        
 
     # checks to see if snake has hit its own tail and if it has, the game is over
     if snake.detect_tail_collision():
         scoreboard.game_over()
         screen.update()
-        game_over = True
+        scoreboard.reset()
+        snake.reset()
     
 
 if game_over:
