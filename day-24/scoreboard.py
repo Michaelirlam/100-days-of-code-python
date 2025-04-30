@@ -1,6 +1,5 @@
 from turtle import Turtle
-with open("./data.txt", mode="r") as data:
-    high_score = data.read()
+
 
     ALIGNMENT = "center"
     FONT = ("Courier", 24, "normal")
@@ -10,7 +9,8 @@ with open("./data.txt", mode="r") as data:
         def __init__(self):
             super().__init__()
             self.score = 0
-            self.high_score = high_score
+            with open("./data.txt", mode="r") as data:
+                self.high_score = int(data.read())
             self.color("white")
             self.penup()
             self.goto(0, 270)
@@ -27,7 +27,7 @@ with open("./data.txt", mode="r") as data:
             self.update_scoreboard()
 
         def reset(self):
-            if self.score > int(self.high_score):
+            if self.score > self.high_score:
                 self.high_score = self.score
                 with open("./data.txt", mode="w") as data:
                     data.write(str(self.high_score))
