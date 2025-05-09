@@ -8,8 +8,10 @@ WHITE = "#ffffff"
 #TODO: Add show checkbox and logic to reveal password
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
+
 password_generator = Password()
 
+# Generated random password when generate password button is pressed
 def generate_password():
     generate = password_generator.generate(nr_letters=10, nr_symbols=4, nr_numbers=4)
     password_variable.set(generate)
