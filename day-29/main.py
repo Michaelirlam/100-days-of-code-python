@@ -1,0 +1,90 @@
+from tkinter import *
+from tkinter import messagebox
+from password import Password
+
+WHITE = "#ffffff"
+
+#TODO: Logic and graphics for checking password is weak, medium, strong
+#TODO: Add show checkbox and logic to reveal password
+
+# ---------------------------- PASSWORD GENERATOR ------------------------------- #
+password_generator = Password()
+
+def generate_password():
+    generate = password_generator.generate(nr_letters=10, nr_symbols=4, nr_numbers=4)
+    password_variable.set(generate)
+
+# ---------------------------- SAVE PASSWORD ------------------------------- #
+
+def save_password():
+    #TODO: Add check to make sure password meets criteria
+    #TODO: Add error handling for saving the password to docs using try/catch
+    #TODO: Save data to JSON instead of txt for better structure
+    
+    # Gets the input for website, email, password
+    website = website_variable.get()
+    email = email_username_variable.get()
+    password = password_variable.get()
+
+    #Check to make sure no fields are blank
+    if not website or not email or not password:
+        messagebox.showwarning(title="Warning!", message="Please fill out all fields!")
+    else:
+        # Asks user if they want to save and returns a bool: yes = True, no = False
+        is_ok = messagebox.askyesno(message=f"You are about to save:\nemail: {email}\npassword: {password}\nAre you sure you want to save?")
+        if is_ok:
+        #opens password.txt and sets to append to add password details
+            with open("./passwords.txt", "a") as file:
+                file.write(f"{website} | {email} | {password}\n")
+            messagebox.showinfo(title="Success!", message="Password save successful!")
+        
+            # Reset website and password inputs to be blank
+            website_variable.set("")
+            password_variable.set("")
+
+# ---------------------------- UI SETUP ------------------------------- #
+
+# Screen setup
+window = Tk()
+window.title("MyPass: Password Manager")
+window.config(padx=20, pady=20, background=WHITE)
+
+# Logo canvas setup
+my_pass_img = PhotoImage(file="logo.png")
+canvas = Canvas(width=200, height=200, highlightthickness=0, background=WHITE)
+canvas.create_image(100, 100, image=my_pass_img)
+canvas.grid(column=0,row=0, columnspan=3)
+
+# Website/URL label and input setup
+website_label = Label(text="Website/URL:", background=WHITE, pady=5)
+website_variable = StringVar()
+website_input = Entry(width=42, textvariable=website_variable)
+website_input.focus()
+website_label.grid(column=0, row=1, sticky="e", padx=5)
+website_input.grid(column=1, row=1, columnspan=2, sticky="w", padx=5)
+
+# Email/Username label and input setup
+email_username_label = Label(text="Email/Username:", background=WHITE, pady=5)
+email_username_variable = StringVar()
+email_username_input = Entry(width=42, textvariable=email_username_variable)
+email_username_input.insert(0, "michael.irlam@bbc.co.uk")
+email_username_label.grid(column=0, row=2, sticky="e", padx=5)
+email_username_input.grid(column=1, row=2, columnspan=2, sticky="w", padx=5)
+
+# Password labels, input, and button setup
+password_label = Label(text="Password:", background=WHITE, pady=5)
+password_variable = StringVar()
+password_input = Entry(width=21, textvariable=password_variable, show="*")
+generate_password_button = Button(text="Generate Password", command=generate_password)
+password_label.grid(column=0, row=3, sticky="e", padx=5)
+password_input.grid(column=1, row=3, sticky="w", padx=5)
+generate_password_button.grid(column=2, row=3, sticky="w", padx=5)
+
+# Add button setup
+add_button = Button(text="Add", width=39, command=save_password)
+add_button.grid(column=1, row=4, columnspan=2, sticky="w", pady=10, padx=5)
+
+
+
+window.mainloop()
+
