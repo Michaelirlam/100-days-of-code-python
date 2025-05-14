@@ -40,17 +40,19 @@ def save_password():
         # Asks user if they want to save and returns a bool: yes = True, no = False
         is_ok = messagebox.askyesno(message=f"You are about to save:\nemail: {email}\npassword: {password}\nAre you sure you want to save?")
         if is_ok:
-        #opens password.txt and sets to append to add password details
-            with open("./passwords.json", "r") as file:
-                # Read JSON data
-                data = json.load(file)
-                # Update old data with new data
-                data.update(data_dict)
-            
+            try:
+                with open("./passwords.json", "r") as file:
+                    # Read JSON data
+                    data = json.load(file)
+                    # Update old data with new data
+                    data.update(data_dict)
+            except (FileNotFoundError, json.JSONDecodeError):
+                data = data_dict
+                
             with open("./passwords.json", "w") as file:
                 # save updated data
                 json.dump(data, file, indent=4)
-                
+
             messagebox.showinfo(title="Success!", message="Password save successful!")
         
             # Reset website and password inputs to be blank
