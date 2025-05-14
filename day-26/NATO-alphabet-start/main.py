@@ -6,8 +6,16 @@ nato_data = pandas.DataFrame(nato)
 nato_dict = {row.letter:row.code for (index, row) in nato_data.iterrows()}
 
 #TODO 2. Create a list of the phonetic code words from a word that the user inputs.
-user_input = input("Type you word or sentence: ")
-user_input = user_input.upper()
-phonetics = [nato_dict[letter] for letter in user_input]
-print(phonetics)
 
+def nato_input():
+    user_input = input("Type you word or sentence: ").upper()
+
+    try:
+        phonetics = [nato_dict[letter] for letter in user_input]
+    except KeyError:
+        print("Invalid input, please use characters in the alphabet")
+        nato_input()
+    else:
+        print(phonetics)
+    
+nato_input()
