@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from password import Password
+import json
 
 WHITE = "#ffffff"
 
@@ -27,6 +28,10 @@ def save_password():
     website = website_variable.get()
     email = email_username_variable.get()
     password = password_variable.get()
+    data_dict = {website: {
+        "email": email,
+        "password": password,
+    }}
 
     #Check to make sure no fields are blank
     if not website or not email or not password:
@@ -36,13 +41,26 @@ def save_password():
         is_ok = messagebox.askyesno(message=f"You are about to save:\nemail: {email}\npassword: {password}\nAre you sure you want to save?")
         if is_ok:
         #opens password.txt and sets to append to add password details
-            with open("./passwords.txt", "a") as file:
-                file.write(f"{website} | {email} | {password}\n")
+            with open("./passwords.json", "r") as file:
+                # Read JSON data
+                data = json.load(file)
+                # Update old data with new data
+                data.update(data_dict)
+            
+            with open("./passwords.json", "w") as file:
+                # save updated data
+                json.dump(data, file, indent=4)
+                
             messagebox.showinfo(title="Success!", message="Password save successful!")
         
             # Reset website and password inputs to be blank
             website_variable.set("")
             password_variable.set("")
+
+#----------------------------- SEARCH -------------------------------------#
+
+
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -60,7 +78,7 @@ canvas.grid(column=0,row=0, columnspan=3)
 # Website/URL label and input setup
 website_label = Label(text="Website/URL:", background=WHITE, pady=5)
 website_variable = StringVar()
-website_input = Entry(width=42, textvariable=website_variable)
+website_input = Entry(width=21, textvariable=website_variable)
 website_input.focus()
 website_label.grid(column=0, row=1, sticky="e", padx=5)
 website_input.grid(column=1, row=1, columnspan=2, sticky="w", padx=5)
@@ -85,6 +103,10 @@ generate_password_button.grid(column=2, row=3, sticky="w", padx=5)
 # Add button setup
 add_button = Button(text="Add", width=39, command=save_password)
 add_button.grid(column=1, row=4, columnspan=2, sticky="w", pady=10, padx=5)
+
+# Search button setup
+search_button = Button(text="Search", width=15)
+search_button.grid(column=2, row=1, sticky="w", padx=5)
 
 
 
