@@ -20,9 +20,8 @@ def generate_password():
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
 def save_password():
+    """Function to save password to JSON file"""
     #TODO: Add check to make sure password meets criteria
-    #TODO: Add error handling for saving the password to docs using try/catch
-    #TODO: Save data to JSON instead of txt for better structure
     
     # Gets the input for website, email, password
     website = website_variable.get()
@@ -40,15 +39,18 @@ def save_password():
         # Asks user if they want to save and returns a bool: yes = True, no = False
         is_ok = messagebox.askyesno(message=f"You are about to save:\nemail: {email}\npassword: {password}\nAre you sure you want to save?")
         if is_ok:
+            # Try/catch to see if existing JSON file and writes email and password to file
             try:
+                # Checks to see if we can open the file
                 with open("./passwords.json", "r") as file:
                     # Read JSON data
                     data = json.load(file)
                     # Update old data with new data
                     data.update(data_dict)
             except (FileNotFoundError, json.JSONDecodeError):
+                # If no file exists changes data to equal data dictionary so it can be written to JSON
                 data = data_dict
-                
+
             with open("./passwords.json", "w") as file:
                 # save updated data
                 json.dump(data, file, indent=4)
@@ -61,8 +63,22 @@ def save_password():
 
 #----------------------------- SEARCH -------------------------------------#
 
-
-
+def search():
+    """Function to search for existing passwords in the password manager"""
+    website = website_variable.get()
+    try:
+        with open("./passwords.json", "r") as file:
+            data = json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        messagebox.showwarning(title="Error", message="No data file found or file is corrupted.")
+        return
+    else:
+        if website in data:
+            email = data[website]["email"]
+            password =  data[website]["password"]
+            messagebox.showinfo(title=website, message=f"email: {email}\npassword: {password}")
+        else:
+            messagebox.showwarning(title="Not found", message=f"No details for '{website}' found.")
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -89,7 +105,7 @@ website_input.grid(column=1, row=1, columnspan=2, sticky="w", padx=5)
 email_username_label = Label(text="Email/Username:", background=WHITE, pady=5)
 email_username_variable = StringVar()
 email_username_input = Entry(width=42, textvariable=email_username_variable)
-email_username_input.insert(0, "michael.irlam@bbc.co.uk")
+email_username_input.insert(0, "michaelirlam@hotmail.co.uk")
 email_username_label.grid(column=0, row=2, sticky="e", padx=5)
 email_username_input.grid(column=1, row=2, columnspan=2, sticky="w", padx=5)
 
@@ -107,10 +123,10 @@ add_button = Button(text="Add", width=39, command=save_password)
 add_button.grid(column=1, row=4, columnspan=2, sticky="w", pady=10, padx=5)
 
 # Search button setup
-search_button = Button(text="Search", width=15)
+search_button = Button(text="Search", width=15, command=search)
 search_button.grid(column=2, row=1, sticky="w", padx=5)
 
 
-
+# Function to keep window open
 window.mainloop()
 
