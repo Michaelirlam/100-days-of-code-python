@@ -105,7 +105,7 @@ website_input.grid(column=1, row=1, columnspan=2, sticky="w", padx=5)
 email_username_label = Label(text="Email/Username:", background=WHITE, pady=5)
 email_username_variable = StringVar()
 email_username_input = Entry(width=42, textvariable=email_username_variable)
-email_username_input.insert(0, "michaelirlam@hotmail.co.uk")
+email_username_input.insert(0, "example@email.co.uk")
 email_username_label.grid(column=0, row=2, sticky="e", padx=5)
 email_username_input.grid(column=1, row=2, columnspan=2, sticky="w", padx=5)
 
