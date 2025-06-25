@@ -33,6 +33,10 @@ def calculate_percentage_change(stock_data):
     return abs(first_day_close - second_day_close) / second_day_close * 100
 
 def check_up_or_down(stock_data):
+    """checks to see if closing stock has gone up or down and returns the correct symbol
+    for use in text or message
+    :params: stock_data= dictionary of key/value pairs with dates as keys and a number of trade values
+    """
     dates = list(stock_data)
     close = "4. close"
     first_day_close = float(stock_data[dates[0]][close])
@@ -46,6 +50,9 @@ def check_up_or_down(stock_data):
 # |------------------------------------NEWS API-------------------------------------|
 
 def get_news(company_name, api_key):
+    """Fetches the latest news articles related to a company using the News API.
+    :params: company_name= The name of the company to search for, api_key= API key to access the News API
+    """
     url = "https://newsapi.org/v2/everything"
     params = {
         "q": company_name,
@@ -60,6 +67,7 @@ def get_news(company_name, api_key):
 # |--------------------------------------MAIN SCRIPT-------------------------------------|
 
 def main():
+    """Main function to execute the stock news alert script."""
     alpha_vantage_api_key = os.environ["ALPHA_API_KEY"]
     news_api_key = os.environ["NEWS_API_KEY"]
     STOCK = "TSLA"
